@@ -15,3 +15,6 @@
 ## Note
  - Need to add account information to *User.js* 
  - I think you should **NOT** call this in client-side, cuz it explore your user/password via plain text.
+
+## Ref
+ - https://github.com/mbilab/ptt-bot
