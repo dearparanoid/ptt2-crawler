@@ -23,13 +23,13 @@ const CtrlZ = '\u001a';
 
 
 /**Send Command */
-export function sendCommand(conn, command) {
+export function sendCommand(data, command) {
   return new Promise((resolve, reject) => {
-    if (!conn) {
+    if (!data.conn) {
       reject({ err: 'Empty Connection' });
     } else {
-      conn.write(command);
-      resolve(conn);
+      data.conn.write(command);
+      resolve(data);
     }
   })
 }
@@ -37,19 +37,19 @@ export function sendCommand(conn, command) {
 /**Login to ptt2.cc */
 export function login(id, pw) {
   return new Promise((resolve, reject) => {
-    const conn = net.createConnection({ port: 23, host: 'ptt2.cc' });
-
-    if
-      (!conn) reject({ err: 'Connection Rejected' });
+    let data={};
+    data.conn = net.createConnection({ port: 23, host: 'ptt2.cc' });
+    if (!data.conn)
+      reject({ err: 'Connection Rejected' });
     else {
-      conn.addListener('connect', () => console.log('Connect to ptt2.cc'));
-      conn.addListener('end', () => console.log('Disconnect..'));
-      conn.addListener('data', (data) => {
-        let connNewData;
-        connNewData += iconv.decode(data, 'big5');
-        console.log(connNewData);
+      data.conn.addListener('connect', () => console.log('Connect to ptt2.cc'));
+      data.conn.addListener('end', () => console.log('Disconnect..'));
+      data.conn.addListener('data', (ret) => {
+        data.connectionData  += iconv.decode(ret ,'big5');
+        resolve(data.connectionData );
+       
       });
-      resolve(conn);
+      resolve(data);
     }
   });
 }
