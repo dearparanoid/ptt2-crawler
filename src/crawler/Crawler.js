@@ -2,6 +2,7 @@
 import net from 'net';
 import iconv from 'iconv-lite';
 
+<<<<<<< HEAD
 /** 
  * reference: 
  * author     chenchen chang <bird11419@yahoo.com.tw>
@@ -21,6 +22,9 @@ const Down = '\u001b[B';
 const CtrlL = '\u000c';
 const CtrlZ = '\u001a';
 const F = 'f';
+=======
+import * as Command from '../common/Command';
+>>>>>>> Get into pernal borad form main pgae
 
 let gConn = {};
 
@@ -62,35 +66,29 @@ export function connectionDataHandler() {
   });
 }
 
-export function connectionHandler(command) {
+export function connectionHandler(keyExtractor, command, commandType) {
   return new Promise((resolve, reject) => {
     gConn.conn.on('timeout', () => {
-      gConn.conn.write(command);
-      gConn.data = '';
-      resolve(gConn);
+      if (ptt2ConnectionHandler(keyExtractor, command, commandType) === true) resolve(gConn);
+      else reject({ err: `Executing Commnad-${command} Fail` });
     });
   })
 }
 
-export function ptt2ConnectionHandler() {
+function ptt2ConnectionHandler(keyExtractor, command, commandType) {
+  //console.log(`Extractor = ${keyExtractor}, Command = ${command}`);
 
-  if (gConn.data.indexOf("按任意鍵繼續") !== -1) {
-    gConn.conn.write(Enter);
-    console.log("請勿頻繁登入以免造成系統過度負荷");
-  } else if (gConn.data.indexOf("分組討論區") !== -1) {
-    gConn.conn.write(`${F}${Enter}`);
-    console.log("Classified List");
-  } else if (gConn.data.indexOf("我的最愛") !== -1) {
-    gConn.conn.write(Enter);
-    console.log("Favorite List");
-  } else if (gConn.data.indexOf("rhythmic") !== -1) {
-    gConn.conn.write(Enter);
-    console.log("Get in rhythmic");
+  if (gConn.data.indexOf(keyExtractor) !== -1) {
+    gConn.data = '';
+    if (commandType === Command.NeedEnter) {      
+      gConn.conn.write(`${command}\r`);
+    } else {
+      gConn.conn.write(command);
+    }
+    return true;
+  } else {
+    return false;
   }
-  else {
-    console.log(" Not in ");
-  }
-  gConn.data = '';
 }
 
 
