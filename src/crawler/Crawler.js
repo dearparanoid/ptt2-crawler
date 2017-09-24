@@ -22,63 +22,76 @@ const CtrlL = '\u000c';
 const CtrlZ = '\u001a';
 const F = 'f';
 
-let gData = '';
 let gConn = {};
 
 /**Send Command */
 export function sendCommand(command) {
   return new Promise((resolve, reject) => {
-    if (!gConn) {
+    if (!gConn.conn) {
       reject({ err: 'Empty Connection' });
     } else {
-      gConn.write(command);
+      gConn.conn.write(command);
       resolve(gConn);
     }
   })
 }
 
-/**Set new connection */
-export function createConn() {
+/** Get Data
+ */
+export function connectToPTT2() {
   return new Promise((resolve, reject) => {
-    gConn = net.createConnection(23, 'ptt2.cc');
-    if (!gConn) {
+    gConn.conn = net.createConnection(23, 'ptt2.cc');
+    if (!gConn.conn) {
       reject({ err: 'Establish connection fail' });
     } else {
-      gConn.setTimeout(2000);
-      gConn.addListener('connect', () => console.log('Connect to ptt2.cc'));
-      gConn.addListener('end', () => console.log('Disconnect..'));
-      gConn.addListener('data', (data)=>{
-        gData += iconv.decode(data, 'big5');
-      })
-      gConn.addListener('timeout', ()=>{
-        console.log(gData);
-        ptt2ConnectionHandler();
-      })
+      gConn.conn.setTimeout(2000);
+      gConn.conn.on('connect', () => console.log('Connect to ptt2.cc'));
+      gConn.conn.on('end', () => console.log('Disconnect..'));
       resolve(gConn);
     }
+  });
+}
+
+export function connectionDataHandler() {
+  return new Promise((resolve, reject) => {
+    gConn.conn.on('data', (data) => {
+      //console.log(data);
+      gConn.data += iconv.decode(data, 'big5');
+      //console.log(gConn.data);
+      resolve(gConn);
+    });
+  });
+}
+
+export function connectionHandler(command) {
+  return new Promise((resolve, reject) => {
+    gConn.conn.on('timeout', () => {
+      gConn.conn.write(command);
+      gConn.data = '';
+      resolve(gConn);
+    });
   })
 }
 
-function ptt2ConnectionHandler() {
-  if (gData.indexOf("按任意鍵繼續") !== -1 ) {
-    gConn.write(Enter);
+export function ptt2ConnectionHandler() {
+
+  if (gConn.data.indexOf("按任意鍵繼續") !== -1) {
+    gConn.conn.write(Enter);
     console.log("請勿頻繁登入以免造成系統過度負荷");
-  } else if (gData.indexOf("分組討論區") !== -1) {
-    gConn.write(`${F}${Enter}`);
+  } else if (gConn.data.indexOf("分組討論區") !== -1) {
+    gConn.conn.write(`${F}${Enter}`);
     console.log("Classified List");
-  } else if (gData.indexOf("我的最愛") !== -1) {
-    gConn.write(Enter);    
+  } else if (gConn.data.indexOf("我的最愛") !== -1) {
+    gConn.conn.write(Enter);
     console.log("Favorite List");
-  } 
+  } else if (gConn.data.indexOf("rhythmic") !== -1) {
+    gConn.conn.write(Enter);
+    console.log("Get in rhythmic");
+  }
   else {
     console.log(" Not in ");
   }
-  gData='';
+  gConn.data = '';
 }
 
-/** Test */
-function test(conn) {
-
-  conn.write(Enter);
-}
 

@@ -9,17 +9,15 @@ import * as Command from './common/Command';
 import * as User from './User';
 
 
-Crawler.createConn()
+Crawler.connectToPTT2()
     .then((ret) => {
         return Crawler.sendCommand(`${User.userID}\r`);
-    })
-    .then((ret) => {
+    }).then((ret) => {
         return Crawler.sendCommand(`${User.userPW}\r`);
-    })
-    .then((ret)=>{
-        return Crawler.sendCommand(Command.Enter);
-    })
-    .then((ret)=>{
-        console.log('finished');
-    })
-    .catch(err => console.log(err));
+    }).then((ret) => {
+        return Crawler.connectionHandler(Command.Enter);
+    }).then((ret) => {
+        return Crawler.connectionDataHandler();
+    }).then((ret)=>{
+        console.log(ret);
+    }).catch(err => console.log(err));
