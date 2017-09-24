@@ -9,22 +9,17 @@ import * as Command from './common/Command';
 import * as User from './User';
 
 
-Crawler.login(User.userID, User.userPW)
-    .then((ret) => {   
-        console.log(ret );
-        return Crawler.sendCommand(ret, `${User.userID}\r`);
+Crawler.createConn()
+    .then((ret) => {
+        return Crawler.sendCommand(`${User.userID}\r`);
     })
-    .then((ret) => {      
-        console.log(ret );
-        return Crawler.sendCommand(ret, `${User.userPW}\r`);
+    .then((ret) => {
+        return Crawler.sendCommand(`${User.userPW}\r`);
+    })
+    .then((ret)=>{
+        return Crawler.sendCommand(Command.Enter);
+    })
+    .then((ret)=>{
+        console.log('finished');
     })
     .catch(err => console.log(err));
-
-    function sleep(milliseconds) {
-        var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-          if ((new Date().getTime() - start) > milliseconds){
-            break;
-          }
-        }
-      }
