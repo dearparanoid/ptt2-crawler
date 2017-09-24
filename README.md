@@ -1,6 +1,7 @@
 # ptt2-crawler
 
-**ptt2-crawler** with Promise.
+**ptt2-crawler** with Promise. 
+Just implement with addLisnter for handler[WIP-Branch](https://github.com/dearparanoid/ptt2-crawler/tree/WIP-Promise). I am not sure Promise works or not... 
 
 ## ToDo List
  - [x] Login 
@@ -12,9 +13,10 @@
  - npm install
  - npm run build
  - node dist/Index.js
+ 
 ## Note
  - Need to add account information to *User.js* 
  - I think you should **NOT** call this in client-side, cuz it explore your user/password via plain text.
-
+ 
 ## Ref
  - https://github.com/mbilab/ptt-bot
