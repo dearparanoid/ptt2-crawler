@@ -55,7 +55,6 @@ export function connectToPTT2() {
 export function connectionDataHandler() {
   return new Promise((resolve, reject) => {
     gConn.conn.on('data', (data) => {
-      //console.log(data);
       gConn.data += iconv.decode(data, 'big5');
       //console.log(gConn.data);
       resolve(gConn);

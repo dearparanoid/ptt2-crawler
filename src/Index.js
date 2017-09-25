@@ -18,6 +18,4 @@ Crawler.connectToPTT2()
         return Crawler.connectionHandler(Command.Enter);
     }).then((ret) => {
         return Crawler.connectionDataHandler();
-    }).then((ret)=>{
-        console.log(ret);
     }).catch(err => console.log(err));
