@@ -2,29 +2,7 @@
 import net from 'net';
 import iconv from 'iconv-lite';
 
-<<<<<<< HEAD
-/** 
- * reference: 
- * author     chenchen chang <bird11419@yahoo.com.tw>
- * link       https://github.com/mbilab/ptt-bot 
- */
-
-/**
-  * Telnet Keyboard Equivalents
-  */
-const Enter = '\r';
-const PageUp = 'P';
-const PageDown = 'N';
-const Left = '\u001b[D';
-const Right = '\u001b[C';
-const Up = '\u001b[A';
-const Down = '\u001b[B';
-const CtrlL = '\u000c';
-const CtrlZ = '\u001a';
-const F = 'f';
-=======
 import * as Command from '../common/Command';
->>>>>>> Get into pernal borad form main pgae
 
 let gConn = {};
 
