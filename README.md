@@ -1,7 +1,6 @@
 # ptt2-crawler
 
-**ptt2-crawler** with Promise. 
-Just implement with addLisnter for handler [WIP-Branch](https://github.com/dearparanoid/ptt2-crawler/tree/WIP-Promise). 
+**ptt2-crawler** with Promise.
 
 ## ToDo List
  - [x] Login 
