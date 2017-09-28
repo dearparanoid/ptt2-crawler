@@ -5,6 +5,7 @@ Just implement with addLisnter for handler [WIP-Branch](https://github.com/dearp
 
 ## ToDo List
  - [x] Login 
+ - [x] Get into selected board
  - [ ] Get all articles
  - [ ] Parse specific tag 
  - [ ] Save to json file.
