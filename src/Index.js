@@ -19,8 +19,6 @@ Crawler.connectToPTT2()
     }).then((ret) => {
         return Crawler.connectionHandler("按任意鍵繼續", Command.NOP, Command.NeedEnter);
     }).then((ret) => {
-        return Crawler.connectionDataHandler();
-    }).then((ret) => {
         return Crawler.connectionHandler("分組討論區", Command.Search, Command.WithoutEnter);
     }).then((ret) => {
         return Crawler.connectionHandler("輸入看板名稱", User.userBoard, Command.NeedEnter);        

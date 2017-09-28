@@ -38,7 +38,7 @@ export function connectionDataHandler() {
   return new Promise((resolve, reject) => {
     gConn.conn.on('data', (data) => {
       gConn.data += iconv.decode(data, 'big5');
-      //console.log(gConn.data);
+      console.log(gConn.data);
       resolve(gConn);
     });
   });
