@@ -17,6 +17,8 @@ export const Down = '\u001b[B';
 export const CtrlL = '\u000c';
 export const CtrlZ = '\u001a';
 export const Search = '\s';
+export const listTitle = '\G';
+export const mark = '\m';
 
 export const F = 'f';
 export const NOP = '';

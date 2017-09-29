@@ -21,8 +21,10 @@ Crawler.connectToPTT2()
     }).then((ret) => {
         return Crawler.connectionHandler("分組討論區", Command.Search, Command.WithoutEnter);
     }).then((ret) => {
-        return Crawler.connectionHandler("輸入看板名稱", User.userBoard, Command.NeedEnter);        
+        return Crawler.connectionHandler("輸入看板名稱", User.userBoard, Command.NeedEnter);
     }).then((ret) => {
-        return Crawler.connectionDataHandler();
+        return Crawler.connectionHandler("文章選讀", Command.listTitle, Command.WithoutEnter);
+    }).then((ret) => {
+        return Crawler.connectionHandler("搜尋標記", Command.mark, Command.NeedEnter);
     })
     .catch(err => console.log(err));

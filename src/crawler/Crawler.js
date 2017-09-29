@@ -58,7 +58,7 @@ function ptt2ConnectionHandler(keyExtractor, command, commandType) {
 
   if (gConn.data.indexOf(keyExtractor) !== -1) {
     gConn.data = '';
-    if (commandType === Command.NeedEnter) {      
+    if (commandType === Command.NeedEnter) {
       gConn.conn.write(`${command}\r`);
     } else {
       gConn.conn.write(command);
