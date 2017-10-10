@@ -1,5 +1,6 @@
 import * as Crawler from './crawler/Crawler';
 import * as Command from './common/Command';
+import * as Tag from './common/SpecTag';
 
 /**Plz add your ptt2 user inforamtion 
  * export const userID= 'xxx'
@@ -23,8 +24,9 @@ Crawler.connectToPTT2()
     }).then((ret) => {
         return Crawler.connectionHandler("輸入看板名稱", User.userBoard, Command.NeedEnter);
     }).then((ret) => {
-        return Crawler.connectionHandler("文章選讀", Command.listTitle, Command.WithoutEnter);
-    }).then((ret) => {
-        return Crawler.connectionHandler("搜尋標記", Command.mark, Command.NeedEnter);
-    })
-    .catch(err => console.log(err));
+        return Crawler.connectionHandler("文章選讀", Command.q, Command.WithoutEnter);
+    }).then((ret)=>{
+        return Crawler.connectionHandler("搜尋標題", Tag.Blog, Command.NeedEnter);
+    }).then((ret)=>{
+        //return Crawler.connectionDataPaser();
+    }).catch(err => console.log(err));

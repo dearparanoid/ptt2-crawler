@@ -19,6 +19,7 @@ export const CtrlZ = '\u001a';
 export const Search = '\s';
 export const listTitle = '\G';
 export const mark = '\m';
+export const q = "\?";
 
 export const F = 'f';
 export const NOP = '';

@@ -38,7 +38,7 @@ export function connectionDataHandler() {
   return new Promise((resolve, reject) => {
     gConn.conn.on('data', (data) => {
       gConn.data += iconv.decode(data, 'big5');
-      console.log(gConn.data);
+      // console.log(gConn.data);
       resolve(gConn);
     });
   });
@@ -53,8 +53,18 @@ export function connectionHandler(keyExtractor, command, commandType) {
   })
 }
 
+export function connectionDataPaser(){
+  return new Promise((resolve, reject)=>{
+    gConn.conn.on('data', (data) => {
+      gConn.data += iconv.decode(data, 'big5');
+      // console.log(gConn.data);
+      //resolve(gConn);
+    });  
+  });
+}
+
 function ptt2ConnectionHandler(keyExtractor, command, commandType) {
-  //console.log(`Extractor = ${keyExtractor}, Command = ${command}`);
+  // console.log(`Extractor = ${keyExtractor}, Command = ${command}`);
 
   if (gConn.data.indexOf(keyExtractor) !== -1) {
     gConn.data = '';
